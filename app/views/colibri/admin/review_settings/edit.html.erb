@@ -1,0 +1,40 @@
+<%= render 'colibri/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+	<%= Colibri.t("colibri_reviews.review_settings") %>
+<% end %>
+
+<%= form_tag(admin_review_settings_path, :method => :put) do %>
+	<fieldset class="no-border-top">
+		<div class="field">
+			<%= check_box_tag('preferences[include_unapproved_reviews]', "1", Colibri::Reviews::Config[:include_unapproved_reviews]) %>
+			<label><%= Colibri.t("colibri_reviews.include_unapproved") %></label>
+		</div>
+		<div class="field">
+			<%= check_box_tag('preferences[feedback_rating]', "1", Colibri::Reviews::Config[:feedback_rating]) %>
+			<label><%= Colibri.t("colibri_reviews.feedback_rating") %></label>
+		</div>
+		<div class="field">
+			<%= check_box_tag('preferences[show_email]', "1", Colibri::Reviews::Config[:show_email]) %>
+			<label><%= Colibri.t("colibri_reviews.show_email") %></label>
+		</div>
+		<div class="field">
+			<%= check_box_tag('preferences[require_login]', "1", Colibri::Reviews::Config[:require_login]) %>
+			<label><%= Colibri.t("colibri_reviews.require_login") %></label>
+		</div>
+		<div class="field">
+			<%= check_box_tag('preferences[track_locale]', "1", Colibri::Reviews::Config[:track_locale]) %>
+			<label><%= Colibri.t("colibri_reviews.track_locale") %></label>
+		</div>
+		<div class="field">
+			<label><%= Colibri.t('colibri_reviews.preview_size') %></label><br>
+			<%= text_field_tag('preferences[preview_size]', Colibri::Reviews::Config[:preview_size], :size => 3) %>
+		</div>
+
+		<div class="form-buttons filter-actions actions" data-hook="buttons">
+			<%= button Colibri.t('actions.update'), 'icon-refresh' %>
+			<span class="or"><%= Colibri.t(:or) %></span>
+			<%= link_to_with_icon 'icon-remove', Colibri.t('actions.cancel'), edit_admin_general_settings_url, :class => 'button' %>
+		</div>
+	</fieldset>
+<% end %>

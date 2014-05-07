@@ -1,0 +1,15 @@
+<div id="reviews">
+  <h6 class="product-section-title"><%= Colibri.t(:reviews) %></h6>
+  <% if Colibri::Reviews::Config[:include_unapproved_reviews] == false and @product.reviews.approved.count == 0 %>
+    <p class="reviews-none"><%= Colibri.t('no_reviews_available') %></p>
+  <% else %>
+    <%= render 'colibri/shared/rating', :product => @product, :review => 0 %>
+    <% for review in (Colibri::Reviews::Config[:track_locale] ? @product.reviews.localized(I18n.locale) : @product.reviews).default_approval_filter.preview %>
+      <%= render 'colibri/shared/review', :review => review %>
+    <% end %>
+  <% end %>
+  <% if !Colibri::Reviews::Config[:require_login] || colibri_current_user %>
+    <%= link_to Colibri.t('write_your_own_review'), new_product_review_path(@product), :class => "button",
+                :rel => "nofollow,noindex" %>
+  <% end %>
+</div>

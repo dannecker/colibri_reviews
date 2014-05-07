@@ -1,0 +1,6 @@
+<p>
+  <%= Colibri.t('voice', :count => review.feedback_reviews.count) %>.
+  <span title="<%= pluralize(review.feedback_stars, 'star') %> <%= Colibri.t('out_of_5') %>">
+  <%= render 'colibri/reviews/stars', :stars => review.feedback_stars %>
+  </span> &nbsp;
+</p>

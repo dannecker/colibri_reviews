@@ -1,0 +1,9 @@
+<div id="reviews">
+  <%= render 'colibri/shared/rating', :locals => @product, :review => 0 %>
+  <% for review in (Colibri::Reviews::Config[:track_locale] ? @product.reviews.localized(I18n.locale) : @product.reviews).default_approval_filter.preview %>
+    <%= render 'colibri/shared/review', :review => review %>
+  <% end %>
+  <% if Colibri::Reviews::Config[:feedback_rating] && (!Colibri::Reviews::Config[:require_login] || colibri_current_user) %>
+    <%= link_to Colibri.t('write_your_own_review'), new_product_review_path(@product), :class => "button" %>
+  <% end %>
+</div>
